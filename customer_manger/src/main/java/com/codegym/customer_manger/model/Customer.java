@@ -1,7 +1,7 @@
 package com.codegym.customer_manger.model;
 
 public class Customer {
-    private int id;
+    private Long id;
     private String name;
     private String email;
     private String address;
@@ -9,7 +9,7 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(int id, String name, String email, String address) {
+    public Customer(Long id, String name, String email, String address) {
         this.setId(id);
         this.setName(name);
         this.setEmail(email);
@@ -17,11 +17,11 @@ public class Customer {
     }
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
