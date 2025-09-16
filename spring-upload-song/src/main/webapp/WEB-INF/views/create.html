@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Thêm bài hát mới</h3>
+<div th:if="${success}">
+    <span th:text="${success}"></span>
+</div>
+<div th:if="${error}">
+    <span th:text="${error}"></span>
+</div>
+<div>
+    <a th:href="@{/song}">Trở về danh sách bài hát</a>
+</div>
+<div id="form">
+    <form th:action="@{/song/save}" th:object="${songForm}" method="post" novalidate="novalidate" enctype="multipart/form-data">
+        <table>
+            <tr>
+                <td><label for="name">Name</label></td>
+                <td><input type="text" id="name" th:field="*{name}"/></td>
+            </tr>
+            <tr>
+                <td><label for="artist">Artist</label></td>
+                <td><input type="text" id="artist" th:field="*{artist}"/></td>
+            </tr>
+            <tr>
+                <td><label for="style">Style</label></td>
+                <td><input type="text" id="style" th:field="*{style}"/></td>
+            </tr>
+            <tr>
+                <td><label for="song">Song</label></td>
+                <td><input type="file" id="song" th:field="*{song}"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Save"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>
