@@ -28,11 +28,13 @@
             </li>
         </ul>
 
-        <p class="text-danger fw-bold">⚠️ Bạn có chắc chắn muốn xoá sản phẩm này không?</p>
+        <p class="text-danger fw-bold">⚠️ Bạn có chắc chắn muốn xoá <span th:text="*{name}"></span> này không?</p>
 
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-danger">Yes</button>
-            <a th:href="@{/products}" class="btn btn-secondary">No</a>
+            <button class="btn btn-secondary">
+                <a th:href="@{/products}" style="text-decoration: none">No</a>
+            </button>
         </div>
     </form>
 </div>

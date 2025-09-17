@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="/layout :: head">
-    <title>ListProduct</title>
+    <title>Products</title>
 </head>
-<body>
-<h3>Products</h3>
-<p>
-    <a th:href="@{/products/create}">
-        Add new product
-    </a>
-</p>
+<body class="container py-4">
 
-<div class="notify">
+<h3 class="mb-3">Products</h3>
+
+<div class="mb-3">
+    <a class="btn btn-success btn-sm" th:href="@{/products/create}">+ Add new product</a>
+</div>
+
+<div class="notify mb-3">
     <div th:if="${success}">
         <span th:text="${success}"></span>
     </div>
 </div>
 
-<div class="mb-3">
-    <form th:action="@{/products/search}" method="get" class="d-flex gap-2">
-        <input type="text" name="keyword" class="form-control"
-               placeholder="Search by name..."
-               th:value="${keyword}">
+<!-- Search form -->
+<form th:action="@{/products/search}" method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text" name="keyword" class="form-control" placeholder="Search by name..." th:value="${keyword}">
+    </div>
+    <div class="col-auto">
         <button type="submit" class="btn btn-primary">Search</button>
-        <button type="submit" class="btn btn-primary">
-            <a th:href="@{/products}">Reset</a>
-        </button>
+        <a th:href="@{/products}" class="btn btn-secondary">Reset</a>
+    </div>
+</form>
 
-    </form>
-</div>
-
-<table id="products">
-    <thead>
+<!-- Product table -->
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-success">
     <tr>
         <th>Name</th>
         <th>Price</th>
         <th>Description</th>
         <th>Manufacturer</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        <th>View</th>
+        <th>Image</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="row,rowStat : ${products}">
-        <td th:text="${row.getName()}"></td>
-        <td th:text="${row.getPrice()}"></td>
-        <td th:text="${row.getDescription()}"></td>
-        <td th:text="${row.getManufacturer()}"></td>
-        <td><a th:href="@{/products/{id}/edit(id=${row.getId()})}">edit</a></td>
-        <td><a th:href="@{/products/{id}/delete(id=${row.getId()})}">delete</a></td>
-        <td><a th:href="@{/products/{id}/view(id=${row.getId()})}">view</a></td>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.manufacturer}"></td>
+        <td>
+            <img th:src="@{'/image/' + ${product.image}}" alt="Product image" class="img-thumbnail" width="80">
+        </td>
+        <td>
+            <a th:href="@{/products/{id}/edit(id=${product.id})}" class="btn btn-warning btn-sm me-1">Edit</a>
+            <a th:href="@{/products/{id}/delete(id=${product.id})}" class="btn btn-danger btn-sm me-1">Delete</a>
+            <a th:href="@{/products/{id}/view(id=${product.id})}" class="btn btn-info btn-sm">View</a>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(products)}">
+        <td colspan="6" class="text-center text-danger">No products found.</td>
     </tr>
     </tbody>
 </table>
+
 <footer th:replace="/layout :: footer"></footer>
 </body>
 </html>

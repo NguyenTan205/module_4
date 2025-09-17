@@ -28,6 +28,10 @@
         <label>Manufacturer:</label>
         <label th:text="${product.manufacturer}"></label>
     </div>
+    <div class="cus-detail">
+        <label>Image:</label>
+        <img th:src="@{'/image/' + ${product.image}}" width="200">
+    </div>
 </div>
 <footer th:replace="/layout :: footer"></footer>
 </body>

@@ -1,5 +1,8 @@
 package com.codegym.productmanagerthymeleaf.configuration;
 
+import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -17,5 +20,13 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    // upload file (định dạng dung lượng tối đa)
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement("", 52428800, 52428800, 0));
+    }
+
 }
 

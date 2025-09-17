@@ -12,9 +12,9 @@ public class ProductServiceImpl implements ProductService {
 
     static {
         products = new HashMap<>();
-        products.put(1, new Product(1, "Iphone 17promax", 1500, "new", "Apple"));
-        products.put(2, new Product(2, "Iphone 16promax", 1200, "likenew", "Apple"));
-        products.put(3, new Product(3, "Samsung S25ultra", 1400, "new", "Samsung"));
+        products.put(1, new Product(1, "Iphone 17promax", 1500, "new", "Apple","iphone 17promax"));
+        products.put(2, new Product(2, "Iphone 16promax", 1200, "likenew", "Apple", "iphone 16promax"));
+        products.put(3, new Product(3, "Samsung S25ultra", 1400, "new", "Samsung", "samsung S25ultra"));
     }
 
     @Override

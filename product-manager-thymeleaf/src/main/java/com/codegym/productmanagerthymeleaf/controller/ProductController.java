@@ -1,19 +1,29 @@
 package com.codegym.productmanagerthymeleaf.controller;
 
 import com.codegym.productmanagerthymeleaf.model.Product;
+import com.codegym.productmanagerthymeleaf.model.ProductForm;
 import com.codegym.productmanagerthymeleaf.service.ProductService;
 import com.codegym.productmanagerthymeleaf.service.ProductServiceImpl;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Controller
 @RequestMapping("/products")
 public class ProductController {
     private static final ProductService productService = new ProductServiceImpl();
+
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @GetMapping("")
     public String index(Model model) {
@@ -28,14 +38,6 @@ public class ProductController {
         return "/create";
     }
 
-    @PostMapping("/save")
-    public String save(Product product, RedirectAttributes redirectAttributes) {
-        product.setId((int) (Math.random() * 1000));
-        productService.save(product);
-        redirectAttributes.addFlashAttribute("message", "Thêm sản phẩm thành công!");
-        return "redirect:/products";
-    }
-
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
         model.addAttribute("product", productService.findById(id));
@@ -45,7 +47,7 @@ public class ProductController {
     @PostMapping("/update")
     public String update(Product product, RedirectAttributes redirectAttributes) {
         productService.update(product.getId(), product);
-        redirectAttributes.addFlashAttribute("message", "Cập nhật sản phẩm thành công!");
+        redirectAttributes.addFlashAttribute("success", "Cập nhật sản phẩm thành công!");
         return "redirect:/products";
     }
 
@@ -58,7 +60,7 @@ public class ProductController {
     @PostMapping("/delete")
     public String delete(Product product, RedirectAttributes redirectAttributes) {
         productService.delete(product.getId());
-        redirectAttributes.addFlashAttribute("message", "Xoá sản phẩm thành công!");
+        redirectAttributes.addFlashAttribute("success", "Xoá sản phẩm thành công!");
         return "redirect:/products";
     }
 
@@ -74,5 +76,29 @@ public class ProductController {
         model.addAttribute("products", products);
         model.addAttribute("keyword", keyword);
         return "/index";
+    }
+
+    @PostMapping("/save")
+    public String save(@ModelAttribute ProductForm productForm, RedirectAttributes redirectAttributes) {
+        MultipartFile multipartFile = productForm.getImage();
+        String fileName = multipartFile.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Product product = new Product(
+                (int) (Math.random() * 1000),
+                productForm.getName(),
+                productForm.getPrice(),
+                productForm.getDescription(),
+                productForm.getManufacturer(),
+                fileName
+        );
+
+        productService.save(product);
+        redirectAttributes.addFlashAttribute("success", "Thêm sản phẩm thành công!");
+        return "redirect:/products";
     }
 }
