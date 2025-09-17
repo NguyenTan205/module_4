@@ -5,11 +5,11 @@
 </head>
 <body>
 <h3>Edit Product</h3>
-<p>
+<div>
     <a th:href="@{/products}">
         Back to product list
     </a>
-</p>
+</div>
 <div id="form">
     <form action="#" th:action="@{/products/update}" th:object="${product}"
           method="POST" novalidate="novalidate">

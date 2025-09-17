@@ -5,29 +5,35 @@
 </head>
 <body class="container py-4">
 
-<h3 class="mb-3">Products</h3>
+<h3 class="mb-3">Quản lí sản phẩm</h3>
 
-<div class="mb-3">
-    <a class="btn btn-success btn-sm" th:href="@{/products/create}">+ Add new product</a>
-</div>
-
+<!--Hiển thị thông báo-->
 <div class="notify mb-3">
-    <div th:if="${success}">
+    <div class="alert alert-success" role="alert" th:if="${success}">
         <span th:text="${success}"></span>
     </div>
 </div>
-
+<!--Thêm sản phẩm-->
+<div class="mb-3">
+    <a class="btn btn-success btn-sm" th:href="@{/products/create}">+ Thêm sản phẩm mới</a>
+</div>
 <!-- Search form -->
 <form th:action="@{/products/search}" method="get" class="row g-2 mb-3">
-    <div class="col-auto">
+    <div>
         <input type="text" name="keyword" class="form-control" placeholder="Search by name..." th:value="${keyword}">
     </div>
-    <div class="col-auto">
+    <div>
         <button type="submit" class="btn btn-primary">Search</button>
         <a th:href="@{/products}" class="btn btn-secondary">Reset</a>
     </div>
 </form>
-
+<!--Lọc theo hãng sản phẩm-->
+<div>
+    <select>
+        <option>Apple</option>
+        <option>Samsung</option>
+    </select>
+</div>
 <!-- Product table -->
 <table class="table table-bordered table-hover align-middle">
     <thead class="table-success">

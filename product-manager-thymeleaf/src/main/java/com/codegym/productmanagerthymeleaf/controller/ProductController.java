@@ -22,9 +22,6 @@ import java.util.List;
 public class ProductController {
     private static final ProductService productService = new ProductServiceImpl();
 
-    @Value("${file-upload}")
-    private String fileUpload;
-
     @GetMapping("")
     public String index(Model model) {
         List<Product> products = productService.findAll();
@@ -77,6 +74,10 @@ public class ProductController {
         model.addAttribute("keyword", keyword);
         return "/index";
     }
+
+    //upload file
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @PostMapping("/save")
     public String save(@ModelAttribute ProductForm productForm, RedirectAttributes redirectAttributes) {
