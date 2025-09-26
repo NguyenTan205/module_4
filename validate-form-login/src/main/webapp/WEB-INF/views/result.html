@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Kết quả</title>
 </head>
 <body>
-$END$
+<h2>Đăng ký thành công!</h2>
+<p>Xin chào, <span th:text="${user.firstName}"></span> <span th:text="${user.lastName}"></span></p>
+<p>Email: <span th:text="${user.email}"></span></p>
+<p>Tuổi: <span th:text="${user.age}"></span></p>
+<p>Số điện thoại: <span th:text="${user.phoneNumber}"></span></p>
 </body>
 </html>
