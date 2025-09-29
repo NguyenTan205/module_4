@@ -11,24 +11,24 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Optional;
 
 @Controller
-@SessionAttributes("cart")
+@SessionAttributes("cart") //Khai báo rằng đối tượng "cart" sẽ được lưu trữ trong session.
 public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @ModelAttribute("cart")
+    @ModelAttribute("cart") //Tạo đối tượng giỏ hàng (Cart) và lưu vào session để sử dụng trong các request sau.
     public Cart setupCart() {
         return new Cart();
     }
 
-    @GetMapping("/shop")
+    @GetMapping("/shop") //Hiển thị danh sách sản phẩm từ productService để người dùng chọn mua.
     public ModelAndView showShop() {
         ModelAndView modelAndView = new ModelAndView("/shop");
         modelAndView.addObject("products", productService.findAll());
         return modelAndView;
     }
 
-    @GetMapping("/add/{id}")
+    @GetMapping("/add/{id}") //Xử lý việc thêm sản phẩm vào giỏ hàng dựa trên ID sản phẩm và hành động (action) được chỉ định.
     public String addToCart(@PathVariable Long id,
                             @ModelAttribute Cart cart,
                             @RequestParam("action") String action) {
