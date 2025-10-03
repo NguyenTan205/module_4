@@ -35,7 +35,7 @@ function successHandler() {
                 '<th>Producer</th>' +
                 '<th>Model</th>' +
                 '<th>Price</th>' +
-                '<th>Delete</th>' +
+                '<th>Action</th>' +
                 '</tr>';
             for (let i = 0; i < data.length; i++) {
                 content += getSmartphone(data[i]);
@@ -61,7 +61,10 @@ function displayFormCreate() {
 
 function getSmartphone(smartphone) {
     return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
-        `<td class="btn"><button class="deleteSmartphone" onclick="deleteSmartphone(${smartphone.id})">Delete</button></td></tr>`;
+        `<td class="btn">
+            <button class="deleteSmartphone" onclick="deleteSmartphone(${smartphone.id})">Delete</button>
+            <button class="editSmartphone" onclick="editSmartphone(${smartphone.id})">Edit</button>
+        </td></tr>`;
 }
 
 function deleteSmartphone(id) {
@@ -70,4 +73,57 @@ function deleteSmartphone(id) {
         url: `http://localhost:8080/api/smartphones/${id}`,
         success: successHandler
     });
+}
+
+function editSmartphone(id) {
+    // Gọi API lấy thông tin smartphone theo id
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:8080/api/smartphones/${id}`,
+        success: function (data) {
+            // Gán dữ liệu vào form edit
+            $('#edit-id').val(data.id);
+            $('#edit-producer').val(data.producer);
+            $('#edit-model').val(data.model);
+            $('#edit-price').val(data.price);
+
+            // Ẩn danh sách và hiển thị form edit
+            document.getElementById('smartphoneList').style.display = "none";
+            document.getElementById('add-smartphone').style.display = "none";
+            document.getElementById('edit-smartphone').style.display = "block";
+            document.getElementById('title').style.display = "none";
+        }
+    });
+}
+
+function updateSmartphone() {
+    let id = $('#edit-id').val();
+    let producer = $('#edit-producer').val();
+    let model = $('#edit-model').val();
+    let price = $('#edit-price').val();
+
+    let updatedSmartphone = {
+        id: id,
+        producer: producer,
+        model: model,
+        price: price
+    };
+
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "PUT",
+        data: JSON.stringify(updatedSmartphone),
+        url: `http://localhost:8080/api/smartphones/${id}`,
+        success: successHandler
+    });
+
+    event.preventDefault();
+}
+function cancelEdit() {
+    document.getElementById('edit-smartphone').style.display = "none";
+    document.getElementById('smartphoneList').style.display = "block";
+    document.getElementById('title').style.display = "block";
 }

@@ -31,7 +31,32 @@
     <button onclick="displayFormCreate()" id="display-create">➕ Create New</button>
 </div>
 
+<div id="edit-smartphone" style="display: none;">
+    <h3>Edit Smartphone</h3>
+    <form onsubmit="updateSmartphone()">
+        <input type="hidden" id="edit-id">
+        <div>
+            <label>Producer: </label>
+            <input type="text" id="edit-producer">
+        </div>
+        <div>
+            <label>Model: </label>
+            <input type="text" id="edit-model">
+        </div>
+        <div>
+            <label>Price: </label>
+            <input type="number" id="edit-price">
+        </div>
+        <div>
+            <button type="submit">Update</button>
+            <button type="button" onclick="cancelEdit()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+
 <div id="smartphoneList"></div>
+
 
 </body>
 </html>
