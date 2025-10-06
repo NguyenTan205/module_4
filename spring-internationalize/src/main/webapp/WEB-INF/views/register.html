@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="#{register.title}">Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f2f2f2, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form table {
+            width: 100%;
+        }
+
+        td {
+            padding: 10px 0;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        input[type="submit"] {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1e8449;
+        }
+
+        .error {
+            color: red;
+            font-size: 13px;
+        }
+
+        .language {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .language a {
+            margin: 0 10px;
+            color: #2980b9;
+            text-decoration: none;
+        }
+
+        .language a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="register-container">
+    <h1 th:text="#{register.heading}">Register</h1>
+
+    <!-- Chọn ngôn ngữ -->
+    <div class="language">
+        Language:
+        <a href="?lang=en" th:classappend="${lang} == 'en' ? 'active' : ''">English</a>
+        <a href="?lang=ja" th:classappend="${lang} == 'ja' ? 'active' : ''">日本語</a>
+        <a href="?lang=ko" th:classappend="${lang} == 'ko' ? 'active' : ''">한국어</a>
+    </div>
+
+    <!-- Form đăng ký -->
+    <form th:action="@{/user/register}" th:object="${user}" method="post">
+        <table>
+            <tr>
+                <td th:text="#{register.username_label}">Username</td>
+            </tr>
+            <tr>
+                <td><input type="text" th:field="*{username}"/></td>
+            </tr>
+            <tr>
+                <td class="error" th:if="${#fields.hasErrors('username')}"
+                    th:errors="*{username}">Username error</td>
+            </tr>
+
+            <tr>
+                <td th:text="#{register.password_label}">Password</td>
+            </tr>
+            <tr>
+                <td><input type="password" th:field="*{password}"/></td>
+            </tr>
+            <tr>
+                <td class="error" th:if="${#fields.hasErrors('password')}"
+                    th:errors="*{password}">Password error</td>
+            </tr>
+
+            <tr>
+                <td><input type="submit" th:value="#{register.submit_label}" value="Register"></td>
+            </tr>
+        </table>
+    </form>
+
+    <div th:if="${error}" class="error" th:text="${error}"></div>
+</div>
+</body>
+</html>
