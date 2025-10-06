@@ -78,6 +78,10 @@
 <body>
 <div class="login-container">
     <h1 th:text="#{login.heading}"></h1>
+<!--    thong bao thanh cong-->
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
     <div class="language">
         Language:
         <a href="?lang=en" th:classappend="${lang} == 'en' ? 'active' : ''">English</a>

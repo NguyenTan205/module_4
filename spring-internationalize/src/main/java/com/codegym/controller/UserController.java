@@ -3,6 +3,7 @@ package com.codegym.controller;
 import com.codegym.model.User;
 import com.codegym.service.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,12 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Locale;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private ILoginService loginService;
+    @Autowired
+    private MessageSource messageSource;
 
     // Hiển thị form đăng ký
     @GetMapping("/register")
@@ -32,20 +37,23 @@ public class UserController {
     public String register(@Validated @ModelAttribute User user,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
-                           Model model) {
+                           Model model,
+                           Locale locale) {
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
         // Check trùng username
         if (loginService.findByUsername(user.getUsername()) != null) {
-            model.addAttribute("error", "Tên đăng nhập đã tồn tại!");
+            String errorMessage = messageSource.getMessage("register.username.duplicate", null, locale);
+            model.addAttribute("error", errorMessage);
             return "register";
         }
 
         // Lưu user vào ArrayList
         loginService.save(user);
-        redirectAttributes.addFlashAttribute("message", "Đăng ký thành công!");
+        String successMessage = messageSource.getMessage("register.success", null, locale);
+        redirectAttributes.addFlashAttribute("message", successMessage);
         return "redirect:/user/login";
     }
 
