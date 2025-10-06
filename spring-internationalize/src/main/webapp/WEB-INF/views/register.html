@@ -87,7 +87,7 @@
 
     <!-- Chọn ngôn ngữ -->
     <div class="language">
-        Language:
+        <span th:text="#{register.language}">Language:</span>
         <a href="?lang=en" th:classappend="${lang} == 'en' ? 'active' : ''">English</a>
         <a href="?lang=ja" th:classappend="${lang} == 'ja' ? 'active' : ''">日本語</a>
         <a href="?lang=ko" th:classappend="${lang} == 'ko' ? 'active' : ''">한국어</a>
