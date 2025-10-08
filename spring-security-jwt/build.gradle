@@ -3,7 +3,7 @@ plugins {
     id 'war'
 }
 
-group 'com.codegym'
+group 'com'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.10.2'
+    junitVersion = '5.11.3'
 }
 
 sourceCompatibility = '17'
@@ -22,17 +22,13 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
-    compileOnly('jakarta.servlet:jakarta.servlet-api:6.0.0')
-
-    implementation 'org.springframework.security:spring-security-core:6.3.1'
-    implementation 'org.springframework.security:spring-security-web:6.3.1'
-    implementation 'org.springframework.security:spring-security-config:6.3.1'
-
     compileOnly('jakarta.servlet:jakarta.servlet-api:6.1.0')
 
     // Spring Framework 6.x (latest stable)
     implementation group: 'org.springframework', name: 'spring-webmvc', version: '6.2.1'
     implementation group: 'org.springframework', name: 'spring-tx', version: '6.2.1'
+    implementation group: 'org.springframework', name: 'spring-orm', version: '6.2.1'
+    implementation group: 'org.springframework', name: 'spring-context', version: '6.2.1'
 
     // Spring Security 6.x (latest stable)
     implementation group: 'org.springframework.security', name: 'spring-security-web', version: '6.4.2'
@@ -49,6 +45,19 @@ dependencies {
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.18.2'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.18.2'
 
+    // Spring Data JPA
+    implementation group: 'org.springframework.data', name: 'spring-data-jpa', version: '3.2.6'
+
+    // Hibernate and JPA
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.2.13.Final'
+
+    // MySQL Driver
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: '8.2.0'
+
+    // Validation
+    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '8.0.1.Final'
+
+    // Test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
